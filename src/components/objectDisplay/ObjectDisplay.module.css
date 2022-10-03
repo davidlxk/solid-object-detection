@@ -1,0 +1,12 @@
+.displayName {
+    font-size:50px;
+    font-weight:lighter;
+    margin-top:50px;
+}
+
+.displayDescription {
+    font-size:20px;
+    font-weight:light;
+    margin-top: 5px;
+    color: rgb(100,100,100)
+}

@@ -1,0 +1,37 @@
+.infoContainer {
+    width:100%;
+    padding:20px 0px 0px 30px;
+    height:190px;
+    border-bottom: 1px solid rgba(66,66,66,0.125);
+    text-align: left;
+}
+
+.infoTitle {
+    font-weight: bold;
+    font-size: 20px;
+    color:rgb(66,66,66);
+}
+
+.infoDesc {
+    font-weight: light;
+    font-size: 14px;
+    color:rgb(66,66,66);
+}
+
+.packagesContainer {
+    margin-top:20px;
+    flex-direction: row;
+    width:100%;
+}
+
+.packagePill {
+    float:left;
+    padding:10px;
+    margin-right:5px;
+    margin-bottom:8px;
+    max-width:200px;
+    /* width:100px; */
+    border-radius:8px;
+    background-color: rgb(220,120,50);
+    color:white;
+}
