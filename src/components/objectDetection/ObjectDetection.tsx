@@ -76,7 +76,7 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
         try {
 
             stream = await navigator.mediaDevices.getUserMedia({ video: {
-                facingMode: 'user'
+                facingMode: 'environment'
             }, audio: false});
             /* use the stream */
             video!.srcObject = stream;

@@ -18,7 +18,7 @@ const HomeScreen: Component<HomeScreenProps> = (props:HomeScreenProps) => {
         <div class={styles.header}></div>
         <div class={store.ifReading ? styles.mainContainerReading : styles.mainContainer}>
             <div class={styles.animationContainer}></div>
-            <ObjectDetection width={window.innerWidth} height={360}/>
+            <ObjectDetection width={window.innerWidth} height={window.innerHeight}/>
         </div>
         <InfoDisplay />
         <ObjectDisplay />
