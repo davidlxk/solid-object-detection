@@ -19,7 +19,7 @@ interface Prediction {
 
 const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionProps) => {
 
-    let video = <video id='camera' class={styles.camera} width={props.width} height={props.height} autoplay={true}>
+    let video = <video id='camera' width={props.width} height={props.height} autoplay={true}>
     </video>;
     let canvas = <canvas id="canvas" style={{display:'none'}} width={props.width} height={props.height}></canvas>
     
@@ -62,7 +62,7 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
 
             setTimeout(() => {
                 setStore({objectName:top.class,ifReading:false});
-            }, 700);
+            }, 500);
             
         }
         //Rerun prediction by timeout
@@ -76,7 +76,7 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
         try {
 
             stream = await navigator.mediaDevices.getUserMedia({ video: {
-                facingMode: 'environment'
+                facingMode: 'user'
             }, audio: false});
             /* use the stream */
             video!.srcObject = stream;
