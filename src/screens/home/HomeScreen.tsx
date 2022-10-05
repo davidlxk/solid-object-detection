@@ -16,11 +16,12 @@ const HomeScreen: Component<HomeScreenProps> = (props:HomeScreenProps) => {
 
     return(<div class={styles.parentContainer}>
         <div class={styles.header}></div>
-        <div class={styles.mainContainer}>
+        {/* <div class={styles.mainContainer}>
             <div class={styles.animationContainer}></div>
-            <ObjectDetection width={window.innerWidth} height={600}/>
-        </div>
-        <ObjectDisplay />
+            
+        </div> */}
+        <ObjectDetection width={window.innerWidth} height={600}/>
+        {/* <ObjectDisplay /> */}
         {/* <InfoDisplay /> */}
     </div>);
 

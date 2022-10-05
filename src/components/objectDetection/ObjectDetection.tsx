@@ -19,7 +19,7 @@ interface Prediction {
 
 const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionProps) => {
 
-    let video = <video id='camera' autoplay={true}>
+    let video = <video id='camera' autoplay={true} width={props.width}>
     </video>;
     let canvas = <canvas id="canvas" style={{display:'none'}} width={props.width} height={props.height}></canvas>
     
