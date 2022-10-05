@@ -19,7 +19,7 @@ interface Prediction {
 
 const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionProps) => {
 
-    let video = <video id='camera' width={props.width} height={props.height} autoplay={true}>
+    let video = <video id='camera' autoplay={true}>
     </video>;
     let canvas = <canvas id="canvas" style={{display:'none'}} width={props.width} height={props.height}></canvas>
     
@@ -64,7 +64,13 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
                 setStore({objectName:top.class,ifReading:false});
             }, 500);
             
+        } else {
+
+            setTimeout(() => {
+                setStore({objectName:"Hmmm...",ifReading:false});
+            }, 500);
         }
+
         //Rerun prediction by timeout
         ctx.clearRect(0,0, props.width,props.height);
         setTimeout(() => predictionFunction(), 1500);
@@ -89,7 +95,8 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
     }
 
     return(<div class={styles.cameraContainer}>
-        <div class={styles.video}>{video}</div>
+        {video}
+        {/* <div class={styles.video}>{video}</div> */}
         {canvas}
         <img id="img" src="" style={{display:"none"}} />
     </div>);
