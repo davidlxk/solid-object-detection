@@ -73,7 +73,7 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
 
         //Rerun prediction by timeout
         ctx?.clearRect(0,0, props.width,props.height);
-        setTimeout(() => predictionFunction(), 1500);
+        setTimeout(() => predictionFunction(), 1000);
       }
 
     async function getMedia() {
