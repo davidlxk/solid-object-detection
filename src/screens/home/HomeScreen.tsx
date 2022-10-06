@@ -21,7 +21,7 @@ const HomeScreen: Component<HomeScreenProps> = (props:HomeScreenProps) => {
             
         </div> */}
         <ObjectDetection width={window.innerWidth} height={600}/>
-        {/* <ObjectDisplay /> */}
+        <ObjectDisplay />
         {/* <InfoDisplay /> */}
     </div>);
 

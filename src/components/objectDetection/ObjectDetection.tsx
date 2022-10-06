@@ -1,4 +1,4 @@
-import { Component, createSignal, onMount } from 'solid-js';
+import { Component, createSignal, JSXElement, onMount } from 'solid-js';
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import * as tf from "@tensorflow/tfjs-core";
 import '@tensorflow/tfjs-backend-cpu';
@@ -19,7 +19,7 @@ interface Prediction {
 
 const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionProps) => {
 
-    let video = <video id='camera' autoplay={true} width={props.width}>
+    let video:JSXElement = <video id='camera' autoplay={true} width={props.width}>
     </video>;
     let canvas = <canvas id="canvas" style={{display:'none'}} width={props.width} height={props.height}></canvas>
     
@@ -49,9 +49,9 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
         setStore({objectName:"",ifReading:true});
 
         //Clear the canvas for each prediction
-        const cnvs = document.getElementById("canvas");
+        const cnvs:HTMLCanvasElement | null = document.getElementById("canvas") as HTMLCanvasElement;
         const ctx = cnvs.getContext("2d");
-        ctx.drawImage(video,0,0,props.width,props.height);
+        ctx?.drawImage(video as CanvasImageSource,0,0,props.width,props.height);
         // ctx.clearRect(0,0, props.width,props.height);
         
         //Start prediction
@@ -72,7 +72,7 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
         }
 
         //Rerun prediction by timeout
-        ctx.clearRect(0,0, props.width,props.height);
+        ctx?.clearRect(0,0, props.width,props.height);
         setTimeout(() => predictionFunction(), 1500);
       }
 

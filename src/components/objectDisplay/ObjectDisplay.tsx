@@ -31,14 +31,14 @@ const ObjectDisplay: Component = (props:DisplayObjectProps) => {
     
     // });
 
-    return(<>
+    return(<div class={styles.footer}>
         <Show when={!store.ifReading}>
             <div class={styles.displayName}>{displayName()}</div>
         </Show>
         <Show when={store.ifReading}>
             <Loader />
         </Show>
-    </>);
+    </div>);
 
 };
 
