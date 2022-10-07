@@ -13,6 +13,8 @@ interface HomeScreenProps {
 const HomeScreen: Component<HomeScreenProps> = (props:HomeScreenProps) => {
 
     const [store, setStore] = Store;
+    const [ifReading, setIfReading] = createSignal<boolean>(false);
+    const [displayName, setDisplayName] = createSignal<string>("");
 
     return(<div class={styles.parentContainer}>
         <div class={styles.header}></div>
@@ -20,8 +22,8 @@ const HomeScreen: Component<HomeScreenProps> = (props:HomeScreenProps) => {
             <div class={styles.animationContainer}></div>
             
         </div> */}
-        <ObjectDetection width={window.innerWidth} height={600}/>
-        <ObjectDisplay />
+        <ObjectDetection width={window.innerWidth} height={600} setIfReading={setIfReading} setDisplayName={setDisplayName}/>
+        <ObjectDisplay ifReading={ifReading()} displayName={displayName()}/>
         {/* <InfoDisplay /> */}
     </div>);
 

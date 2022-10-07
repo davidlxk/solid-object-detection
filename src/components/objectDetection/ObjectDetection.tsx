@@ -9,6 +9,8 @@ interface ObjectDetectionProps {
 
     width:number;
     height:number;
+    setIfReading:(ifReading: boolean) => void;
+    setDisplayName: (displayName: string) => void;
 }
 
 interface Prediction {
@@ -46,7 +48,9 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
 
     async function predictionFunction() {
 
-        setStore({objectName:"",ifReading:true});
+        props.setIfReading(true);
+        props.setDisplayName("");
+        // setStore({objectName:"",ifReading:true});
 
         //Clear the canvas for each prediction
         const cnvs:HTMLCanvasElement | null = document.getElementById("canvas") as HTMLCanvasElement;
@@ -61,19 +65,23 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
             const top:Prediction = predictions[0];
 
             setTimeout(() => {
-                setStore({objectName:top.class,ifReading:false});
+                props.setIfReading(false);
+                props.setDisplayName(top.class);
+                // setStore({objectName:top.class,ifReading:false});
             }, 500);
             
         } else {
 
             setTimeout(() => {
-                setStore({objectName:"Hmmm...",ifReading:false});
+                props.setIfReading(false);
+                props.setDisplayName("Hmmm...");
             }, 500);
         }
 
         //Rerun prediction by timeout
         ctx?.clearRect(0,0, props.width,props.height);
-        setTimeout(() => predictionFunction(), 1000);
+        // predictionFunction();
+        setTimeout(() => predictionFunction(), 600);
       }
 
     async function getMedia() {

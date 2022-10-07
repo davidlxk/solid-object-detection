@@ -5,21 +5,24 @@ import styles from './ObjectDisplay.module.css';
 
 interface DisplayObjectProps {
 
-    
+    ifReading:boolean;
+    displayName:string;
 }
 
-const ObjectDisplay: Component = (props:DisplayObjectProps) => {
+const ObjectDisplay: Component<DisplayObjectProps> = (props:DisplayObjectProps) => {
 
-    const [store, setStore] = Store;
-    const [displayName, setDisplayName] = createSignal<string>("");
-    const [desc, setDesc] = createSignal<string>("");
+    // const [store, setStore] = Store;
+    // const [displayName, setDisplayName] = createSignal<string>("");
+    // const [desc, setDesc] = createSignal<string>("");
 
-    createEffect(() => {
+
+    // createEffect(() => {
     
-        const objectName = store.objectName;
-        const uppercased: string = objectName.charAt(0).toUpperCase() + objectName.slice(1);
-        setDisplayName(uppercased);
-    });
+    //     const objectName = store.objectName;
+    //     const uppercased: string = objectName.charAt(0).toUpperCase() + objectName.slice(1);
+    //     setDisplayName(uppercased);
+    // });
+
 
     // createEffect(() => {
     
@@ -32,10 +35,10 @@ const ObjectDisplay: Component = (props:DisplayObjectProps) => {
     // });
 
     return(<div class={styles.footer}>
-        <Show when={!store.ifReading}>
-            <div class={styles.displayName}>{displayName()}</div>
+        <Show when={!props.ifReading}>
+            <div class={styles.displayName}>{props.displayName}</div>
         </Show>
-        <Show when={store.ifReading}>
+        <Show when={props.ifReading}>
             <Loader />
         </Show>
     </div>);
