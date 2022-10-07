@@ -21,9 +21,8 @@ interface Prediction {
 
 const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionProps) => {
 
-    let video:JSXElement = <video id='camera' autoplay={true} width={props.width}>
-    </video>;
-    let canvas = <canvas id="canvas" style={{display:'none'}} width={props.width} height={props.height}></canvas>
+    let video: any = <video id='camera' autoplay={true} width={props.width} height={props.height}></video>;
+    // let canvas = <canvas id="canvas" style={{"background-color": "transparent"}} width={props.width} height={props.height}></canvas>
     
     const [model, setModel] = createSignal<any>();
 
@@ -39,7 +38,8 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
             const model = await cocoSsd.load();
             setModel(model);
             
-            predictionFunction();
+            setTimeout(() => predictionFunction(), 200);
+            // predictionFunction();
         } 
         catch (err) {
           console.log(err);
@@ -53,35 +53,69 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
         // setStore({objectName:"",ifReading:true});
 
         //Clear the canvas for each prediction
-        const cnvs:HTMLCanvasElement | null = document.getElementById("canvas") as HTMLCanvasElement;
-        const ctx = cnvs.getContext("2d");
-        ctx?.drawImage(video as CanvasImageSource,0,0,props.width,props.height);
-        // ctx.clearRect(0,0, props.width,props.height);
+        const cnvs: any = document.getElementById("canvas");
+        const ctx:any = cnvs.getContext("2d");
+        // ctx?.drawImage(video,0,0,props.width,props.height);
+        ctx.clearRect(0,0, props.width,props.height);
         
         //Start prediction
-        const predictions = await model().detect(cnvs);
+        const predictions = await model().detect(document.getElementById("camera"));//await model().detect(cnvs);
         if (predictions.length > 0) {
     
-            const top:Prediction = predictions[0];
+            // const top:Prediction = predictions[0];
 
-            setTimeout(() => {
-                props.setIfReading(false);
-                props.setDisplayName(top.class);
-                // setStore({objectName:top.class,ifReading:false});
-            }, 500);
+            for (let n = 0; n < predictions.length; n++) {
+
+                // console.log(n);
+          
+                // if (predictions[n].score > 0.5) {
+          
+                  //Threshold is 0.8 or 80%
+                  //Extracting the coordinate and the bounding box information
+                  let bboxLeft = predictions[n].bbox[0];
+                  let bboxTop = predictions[n].bbox[1];
+                  let bboxWidth = predictions[n].bbox[2];
+                  let bboxHeight = predictions[n].bbox[3] - bboxTop;
+                //   console.log("predictions[n] is ",predictions[n]);
+                //   console.log("bboxLeft: " + bboxLeft);
+                //   console.log("bboxTop: " + bboxTop);
+                //   console.log("bboxWidth: " + bboxWidth);
+                //   console.log("bboxHeight: " + bboxHeight);
+                  //Drawing begin
+                  ctx.beginPath();
+                  ctx.font = "28px Arial";
+                  ctx.fillStyle = "red";
+                  ctx.fillText(
+                  predictions[n].class +": " + Math.round(parseFloat(predictions[n].score) * 100) +
+                  "%", bboxLeft,bboxTop);
+                  ctx.rect(bboxLeft, bboxTop, bboxWidth, bboxHeight);
+                  ctx.strokeStyle = "#FF0000";
+                  ctx.lineWidth = 3;
+                  ctx.stroke();
+                //   console.log("detected");
+                // }
+            }
+            
+
+
+            // setTimeout(() => {
+            //     props.setIfReading(false);
+            //     props.setDisplayName(top.class);
+            //     // setStore({objectName:top.class,ifReading:false});
+            // }, 500);
             
         } else {
 
-            setTimeout(() => {
-                props.setIfReading(false);
-                props.setDisplayName("Hmmm...");
-            }, 500);
+            // setTimeout(() => {
+            //     props.setIfReading(false);
+            //     props.setDisplayName("Hmmm...");
+            // }, 500);
         }
 
         //Rerun prediction by timeout
-        ctx?.clearRect(0,0, props.width,props.height);
+        // ctx?.clearRect(0,0, props.width,props.height);
         // predictionFunction();
-        setTimeout(() => predictionFunction(), 600);
+        setTimeout(() => predictionFunction(), 250);
       }
 
     async function getMedia() {
@@ -103,10 +137,20 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
     }
 
     return(<div class={styles.cameraContainer}>
-        {video}
-        {/* <div class={styles.video}>{video}</div> */}
-        {canvas}
-        <img id="img" src="" style={{display:"none"}} />
+        {/* {video} */}
+        <div class={styles.video}>{video}</div>
+        {/* <div class={styles.canvasContainer}>
+            <canvas id="canvas" width={props.width} height={props.height}></canvas>
+        </div> */}
+        <div style={{ position: 'absolute', top: "100px", "z-index": "9999" }}>
+            <canvas
+                id="canvas"
+                width={props.width}
+                height={props.height}
+            style={{ "background-color": "transparent" }}
+            />
+        </div>
+        {/* <img id="img" src="" style={{display:"none"}} /> */}
     </div>);
 
 };
