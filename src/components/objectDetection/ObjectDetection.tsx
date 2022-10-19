@@ -58,7 +58,7 @@ const ObjectDetection: Component<ObjectDetectionProps> = (props:ObjectDetectionP
         // ctx?.drawImage(video,0,0,props.width,props.height);
         ctx.clearRect(0,0, props.width,props.height);
         
-        //Start prediction
+        //Start predictions
         const predictions = await model().detect(document.getElementById("camera"));//await model().detect(cnvs);
         if (predictions.length > 0) {
     
